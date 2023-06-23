@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScans;
 @SpringBootApplication
 @MapperScan("cn.edu.bupt.backendfinal.mapper")
 @ComponentScan("cn.edu.bupt.backendfinal.controller")
+@ComponentScan("cn.edu.bupt.backendfinal.services")
 public class BackendFinalApplication {
 
 	public static void main(String[] args) {
