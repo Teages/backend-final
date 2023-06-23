@@ -3,12 +3,8 @@ package cn.edu.bupt.backendfinal.services.impl;
 import cn.edu.bupt.backendfinal.entity.User;
 import cn.edu.bupt.backendfinal.mapper.UserMapper;
 import cn.edu.bupt.backendfinal.services.UserService;
+import cn.hutool.crypto.digest.DigestUtil;
 import lombok.Data;
-
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +22,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   public ResponseEntity<SessionResponse> login(String userId, String password) {
     var user = userMapper.selectOne(
         new QueryWrapper<User>().eq("name", userId));
-    if (user != null && user.getPassword().equals(hash(password))) {
+    if (user != null && user.getPassword().equals(DigestUtil.sha256Hex(password))) {
       return ResponseEntity.ok()
           .body(new SessionResponse(
               "Login successful",
@@ -39,20 +35,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
               null,
               null));
     }
-  }
-
-  String hash(String password) {
-    StringBuilder sb = new StringBuilder();
-    try {
-      MessageDigest md = MessageDigest.getInstance("SHA-256");
-      byte[] encrypted = md.digest(password.getBytes(StandardCharsets.UTF_8));
-      for (byte b : encrypted) {
-        sb.append(String.format("%02x", b));
-      }
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
-    return sb.toString();
   }
 
   @Data

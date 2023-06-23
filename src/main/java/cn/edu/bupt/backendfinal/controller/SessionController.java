@@ -27,9 +27,9 @@ public class SessionController {
 
   @PostMapping("/session/login")
   public ResponseEntity<UserServiceImpl.SessionResponse> login(
-      @RequestParam String userId,
+      @RequestParam String user,
       @RequestParam String password) {
-    return userService.login(userId, password);
+    return userService.login(user, password);
   }
 
   @DeleteMapping("/session")
