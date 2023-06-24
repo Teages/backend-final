@@ -12,3 +12,14 @@ INSERT INTO products (title, owner_id, price, description, stock)
 SELECT 'Test Product', id, 100, 'Product Description', 10
 FROM users
 WHERE name = 'Teages';
+
+INSERT INTO comments (category, category_id, owner_id, create_date, content)
+SELECT 'product', p.id, u.id, NOW(), 'Test Comment'
+FROM products as p, users as u
+WHERE p.title = 'Test Product'
+  AND u.name = 'Teages';
+
+INSERT INTO comments (category, category_id, owner_id, create_date, content)
+SELECT 'comment', 1, u.id, NOW(), 'Test Reply Comment'
+FROM users as u
+WHERE u.name = 'Teages';

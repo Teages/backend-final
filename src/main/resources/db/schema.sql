@@ -15,3 +15,14 @@ CREATE TABLE products (
   description TEXT,
   stock INTEGER NOT NULL
 );
+
+DROP TABLE IF EXISTS comments;
+CREATE TABLE comments (
+  id SERIAL PRIMARY KEY,
+  category VARCHAR(32) NOT NULL,
+  category_id INTEGER NOT NULL,
+  owner_id INTEGER NOT NULL,
+  create_date TIMESTAMP NOT NULL,
+  content TEXT NOT NULL,
+  deleted BOOLEAN NOT NULL DEFAULT FALSE
+);

@@ -127,7 +127,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
   static public class ProductResponse {
     private Integer id;
     private String title;
-    private OwnerResponse owner;
+    private String owner;
     private Integer price; // 以分为单位
     private String description;
     private Integer stock;
@@ -140,7 +140,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     public ProductResponse(Product product, User owner) {
       this.id = product.getId();
       this.title = product.getTitle();
-      this.owner = new OwnerResponse(owner);
+      this.owner = owner.getName();
       this.price = product.getPrice();
       this.description = product.getDescription();
       this.stock = product.getStock();
@@ -149,7 +149,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     public ProductResponse(Product product, User owner, String message) {
       this.id = product.getId();
       this.title = product.getTitle();
-      this.owner = new OwnerResponse(owner);
+      this.owner = owner.getName();
       this.price = product.getPrice();
       this.description = product.getDescription();
       this.stock = product.getStock();
@@ -160,17 +160,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
       var ans = new ProductResponse();
       ans.message = message;
       return ans;
-    }
-
-    @Data
-    static public class OwnerResponse {
-      private Integer id;
-      private String name;
-
-      public OwnerResponse(User owner) {
-        this.id = owner.getId();
-        this.name = owner.getName();
-      }
     }
   }
 
