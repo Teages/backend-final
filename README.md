@@ -69,7 +69,7 @@
 - `GET /users/{userId}/orders`: 查看对应 ID 的订单
 - `GET /users/{userId}/lives`: 查看对应 ID 的直播间
 
-商品系统
+商品系统 (DONE 5/7)
 
 - `GET /products`: 全部商品
 - `POST /products`: 新建商品

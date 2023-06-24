@@ -4,7 +4,6 @@ import cn.edu.bupt.backendfinal.entity.User;
 import cn.edu.bupt.backendfinal.mapper.UserMapper;
 import cn.edu.bupt.backendfinal.services.UserService;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.JWTValidator;

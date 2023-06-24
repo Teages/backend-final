@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -23,6 +22,7 @@ import cn.edu.bupt.backendfinal.entity.Product;
 import cn.edu.bupt.backendfinal.entity.User;
 import cn.edu.bupt.backendfinal.mapper.ProductMapper;
 import cn.edu.bupt.backendfinal.services.ProductServices;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Service
@@ -175,10 +175,15 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
   }
 
   @Data
+  @Schema(description = "商品请求")
   static public class ProductRequest {
+    @Schema(description = "商品名称", required = true, example = "一种商品")
     private String title;
+    @Schema(description = "商品单价 (元)", required = true, example = "1000")
     private Integer price; // 以分为单位
+    @Schema(description = "商品描述", required = true, example = "这是一种普通的商品")
     private String description;
+    @Schema(description = "商品库存", required = true, example = "100")
     private Integer stock;
   }
 }
