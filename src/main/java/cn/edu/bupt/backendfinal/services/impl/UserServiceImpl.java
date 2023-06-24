@@ -16,8 +16,6 @@ import lombok.Data;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,8 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   public ResponseEntity<SessionResponse> login(String userId, String password, HttpServletResponse response) {
     var user = userMapper.selectOne(
         new QueryWrapper<User>().eq("name", userId));
-    if (user != null && user.getPassword().equals(DigestUtil.sha256Hex(password))) {
-
+    if (user != null && user.verify(password)) {
       var createAt = Calendar.getInstance();
       var expiresAt = Calendar.getInstance();
       expiresAt.add(Calendar.DAY_OF_MONTH, 7);
@@ -67,11 +64,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
           .setExpiresAt(expiresAt.getTime())
           .sign();
 
-      var cookie = new Cookie("token", token);
-      // cookie.setSecure(true);
-      cookie.setHttpOnly(true);
-      cookie.setMaxAge(7 * 24 * 60 * 60);
-      response.addCookie(cookie);
+      var cookieToken = new Cookie("token", token);
+      // cookieToken.setSecure(true);
+      cookieToken.setHttpOnly(true);
+      cookieToken.setMaxAge(7 * 24 * 60 * 60);
+      response.addCookie(cookieToken);
+      
+      var cookieRole = new Cookie("role", user.getRole());
+      cookieRole.setMaxAge(7 * 24 * 60 * 60);
+      response.addCookie(cookieRole);
 
       return ResponseEntity.ok()
           .body(new SessionResponse(
@@ -110,7 +111,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
               null,
               null));
     }
-    var newUser = new User(userId, DigestUtil.sha256Hex(password));
+    var newUser = new User(userId, password);
     userMapper.insert(newUser);
 
     var ans = login(userId, password, response);

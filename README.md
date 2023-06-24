@@ -49,10 +49,16 @@
 登录系统
 
 - `GET /session`: 获取当前登录信息
-- `POST /session/register`: 注册
-- `POST /session/login`: 登录
+- `POST /session/register?user={userId}&password={password}`: 注册
+- `POST /session/login?user={userId}&password={password}`: 登录
 - `POST /session/logout`: 注销
   > 不能用 `DELETE`
+
+权限系统
+
+- `POST /studio/upgrade/host?user={userId}`: 将对应 ID 的用户从用户升级为主播
+- `POST /studio/upgrade/admin?user={userId}`: 将对应 ID 的用户从用户或主播升级为管理员
+- `POST /studio/downgrade?user={userId}`: 将对应 ID 的用户降级为普通用户
 
 用户系统
 
