@@ -116,7 +116,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
   public List<CommentServicesImpl.CommentResponse> getComment(
       Integer productId) {
-    return commentServices.getAllCommnetBuilder("product", productId);
+    return commentServices.getAllCommentBuilder("product", productId);
   }
 
   public ResponseEntity<CommentServicesImpl.CommentResponse> createComment(

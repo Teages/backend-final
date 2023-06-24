@@ -82,7 +82,7 @@ public class CommentServicesImpl extends ServiceImpl<CommentMapper, Comment> imp
     return getCommentBuilder(comment);
   }
 
-  public List<CommentResponse> getAllCommnetBuilder(
+  public List<CommentResponse> getAllCommentBuilder(
       String category,
       Integer categoryId) {
     var comments = commentMapper.selectList(
