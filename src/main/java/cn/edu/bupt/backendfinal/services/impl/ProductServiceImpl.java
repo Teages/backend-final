@@ -31,6 +31,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
   @Autowired
   UserServiceImpl userService;
 
+  @Autowired
+  CommentServicesImpl commentServices;
+
   public List<ProductResponse> getAllProducts() {
     var products = productMapper.selectList(
         new QueryWrapper<Product>());
@@ -93,8 +96,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
   public ResponseEntity<ProductResponse> removeProduct(
       String token,
-      Integer productId
-  ) {
+      Integer productId) {
     var user = userService.whoami(token);
     var product = getById(productId);
     if (product == null) {
@@ -110,6 +112,24 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     productMapper.deleteById(product);
 
     return ResponseEntity.ok().body(new ProductResponse(product, owner, "Successfully removed"));
+  }
+
+  public List<CommentServicesImpl.CommentResponse> getComment(
+      Integer productId) {
+    return commentServices.getAllCommnetBuilder("product", productId);
+  }
+
+  public ResponseEntity<CommentServicesImpl.CommentResponse> createComment(
+      String token,
+      Integer productId,
+      CommentServicesImpl.CommentRequest commentData) {
+    var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+          new CommentServicesImpl.CommentResponse("You haven't logged in yet"));
+    }
+    return ResponseEntity.ok(commentServices.createCommentBuilder(
+        user, "product", productId, commentData.getContent()));
   }
 
   private static String[] getNullPropertyNames(Object source) {

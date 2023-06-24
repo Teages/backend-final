@@ -17,6 +17,7 @@ import cn.edu.bupt.backendfinal.entity.Comment;
 import cn.edu.bupt.backendfinal.entity.User;
 import cn.edu.bupt.backendfinal.mapper.CommentMapper;
 import cn.edu.bupt.backendfinal.services.CommentServices;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Service
@@ -42,13 +43,12 @@ public class CommentServicesImpl extends ServiceImpl<CommentMapper, Comment> imp
       CommentRequest commentRequest) {
     var user = userService.whoami(token);
     return ResponseEntity.ok(
-      createCommentBuilder(user, "comment", id, commentRequest.getContent())
-    );
+        createCommentBuilder(user, "comment", id, commentRequest.getContent()));
   }
 
   public ResponseEntity<CommentResponse> deleteComment(
-    String token,
-    Integer id) {
+      String token,
+      Integer id) {
     var user = userService.whoami(token);
     var comment = commentMapper.selectById(id);
     if (comment == null) {
@@ -59,13 +59,12 @@ public class CommentServicesImpl extends ServiceImpl<CommentMapper, Comment> imp
       return ResponseEntity.status(Response.SC_FORBIDDEN).body(
           new CommentResponse("Permission denied"));
     }
-    
+
     comment.setDeleted(true);
     commentMapper.updateById(comment);
 
     return ResponseEntity.ok(
-      getCommentBuilder(comment)
-    );
+        getCommentBuilder(comment));
   }
 
   public CommentResponse createCommentBuilder(
@@ -81,6 +80,21 @@ public class CommentServicesImpl extends ServiceImpl<CommentMapper, Comment> imp
         content);
     commentMapper.insert(comment);
     return getCommentBuilder(comment);
+  }
+
+  public List<CommentResponse> getAllCommnetBuilder(
+      String category,
+      Integer categoryId) {
+    var comments = commentMapper.selectList(
+        new QueryWrapper<Comment>()
+            .eq("category", category)
+            .eq("category_id", categoryId)
+            .orderByDesc("create_date"));
+    var ans = new ArrayList<CommentResponse>();
+    for (var comment : comments) {
+      ans.add(getCommentBuilder(comment));
+    }
+    return ans;
   }
 
   private CommentResponse getCommentBuilder(Comment commentData) {
@@ -136,7 +150,10 @@ public class CommentServicesImpl extends ServiceImpl<CommentMapper, Comment> imp
   }
 
   @Data
+  @Schema(description = "评论请求")
   static public class CommentRequest {
+    
+    @Schema(description = "评论内容", required = true, example = "这是一条正常的评论")
     private String content;
 
     public CommentRequest() {

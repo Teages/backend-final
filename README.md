@@ -60,7 +60,7 @@
 - `POST /studio/upgrade/admin?user={userId}`: 将对应 ID 的用户从用户或主播升级为管理员
 - `POST /studio/downgrade?user={userId}`: 将对应 ID 的用户降级为普通用户
 
-用户系统
+用户系统 (最后完成)
 
 - `/user/*`: 映射到 `/users/{userId}/*`, 以当前登录用户的 ID 进行填充
 - `GET /users/{userId}`: 查看对应 ID 的用户信息
@@ -69,7 +69,7 @@
 - `GET /users/{userId}/orders`: 查看对应 ID 的订单
 - `GET /users/{userId}/lives`: 查看对应 ID 的直播间
 
-商品系统 (DONE 5/7)
+商品系统 (DONE)
 
 - `GET /products`: 全部商品
 - `POST /products`: 新建商品

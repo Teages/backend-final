@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.edu.bupt.backendfinal.Util;
+import cn.edu.bupt.backendfinal.services.impl.CommentServicesImpl;
 import cn.edu.bupt.backendfinal.services.impl.ProductServiceImpl;
 import cn.edu.bupt.backendfinal.services.impl.ProductServiceImpl.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,15 +38,14 @@ public class ProductController {
   @Operation(description = "新增商品, 仅管理员和主播可以操作")
   public ResponseEntity<ProductResponse> createProducts(
       @RequestHeader(value = "Authorization", required = false) String auth,
-      @RequestBody ProductServiceImpl.ProductRequest product
-  ) {
+      @RequestBody ProductServiceImpl.ProductRequest product) {
     return productService.createProducts(Util.decodeAuth(auth), product);
   }
 
   @GetMapping("/products/{productId}")
   @Operation(description = "查询商品")
   @Parameters({
-    @Parameter(name = "productId", description = "商品 ID", required = true)
+      @Parameter(name = "productId", description = "商品 ID", required = true)
   })
   public ResponseEntity<ProductResponse> getProduct(
       @PathVariable Integer productId) {
@@ -55,7 +55,7 @@ public class ProductController {
   @PutMapping("/products/{productId}")
   @Operation(description = "更新商品, 仅管理员和所有者主播可以操作")
   @Parameters({
-    @Parameter(name = "productId", description = "商品 ID", required = true)
+      @Parameter(name = "productId", description = "商品 ID", required = true)
   })
   public ResponseEntity<ProductResponse> updateProduct(
       @RequestHeader(value = "Authorization", required = false) String auth,
@@ -67,7 +67,7 @@ public class ProductController {
   @DeleteMapping("/products/{productId}")
   @Operation(description = "删除商品, 仅管理员和所有者主播可以操作")
   @Parameters({
-    @Parameter(name = "productId", description = "商品 ID", required = true)
+      @Parameter(name = "productId", description = "商品 ID", required = true)
   })
   public ResponseEntity<ProductResponse> removeProduct(
       @RequestHeader(value = "Authorization", required = false) String auth,
@@ -75,17 +75,25 @@ public class ProductController {
     return productService.removeProduct(Util.decodeAuth(auth), productId);
   }
 
-  @PostMapping("/products/{productId}/comments")
-  public String getComment(
+  @GetMapping("/products/{productId}/comments")
+  @Operation(description = "查询商品评论")
+  @Parameters({
+      @Parameter(name = "productId", description = "商品 ID", required = true)
+  })
+  public List<CommentServicesImpl.CommentResponse> getComment(
       @PathVariable Integer productId) {
-    // TODO: comments
-    return "Hello World";
+    return productService.getComment(productId);
   }
 
-  @DeleteMapping("/products/{productId}/comments")
-  public String addComment(
-      @PathVariable Integer productId) {
-    // TODO: comments
-    return "Hello World";
+  @PostMapping("/products/{productId}/comments")
+  @Operation(description = "向商品发布评论")
+  @Parameters({
+      @Parameter(name = "productId", description = "商品 ID", required = true),
+  })
+  public ResponseEntity<CommentServicesImpl.CommentResponse> addComment(
+      @RequestHeader(value = "Authorization", required = false) String auth,
+      @PathVariable Integer productId,
+      @RequestBody CommentServicesImpl.CommentRequest comment) {
+    return productService.createComment(Util.decodeAuth(auth), productId, comment);
   }
 }
