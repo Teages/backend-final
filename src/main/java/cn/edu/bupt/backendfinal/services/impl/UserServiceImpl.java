@@ -43,9 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
         .body(new SessionResponse(
-            "You haven't logged in yet",
-            null,
-            null));
+            "You haven't logged in yet"));
   }
 
   public ResponseEntity<SessionResponse> login(String userId, String password, HttpServletResponse response) {
@@ -69,7 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       cookieToken.setPath("/");
       cookieToken.setMaxAge(7 * 24 * 60 * 60);
       response.addCookie(cookieToken);
-      
+
       var cookieRole = new Cookie("role", user.getRole());
       cookieRole.setMaxAge(7 * 24 * 60 * 60);
       cookieRole.setPath("/");
@@ -79,28 +77,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
           .body(new SessionResponse(
               "Login successful",
               user.getName(),
-              user.getRole()));
+              user.getRole(),
+              token));
     } else {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new SessionResponse(
-              "Wrong username or password",
-              null,
-              null));
+              "Wrong username or password"));
     }
   }
 
   public ResponseEntity<SessionResponse> logout(HttpServletResponse response) {
-      var cookie = new Cookie("token", "");
-      // cookie.setSecure(true);
-      cookie.setHttpOnly(true);
-      cookie.setMaxAge(0);
-      cookie.setPath("/");
-      response.addCookie(cookie);
-      return ResponseEntity.ok()
+    var cookie = new Cookie("token", "");
+    // cookie.setSecure(true);
+    cookie.setHttpOnly(true);
+    cookie.setMaxAge(0);
+    cookie.setPath("/");
+    response.addCookie(cookie);
+    return ResponseEntity.ok()
         .body(new SessionResponse(
-            "Cleaned token",
-            null,
-            null));
+            "Cleaned token"));
   }
 
   public ResponseEntity<SessionResponse> register(String userId, String password, HttpServletResponse response) {
@@ -108,9 +103,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (user != null) {
       return ResponseEntity.status(HttpStatus.CONFLICT)
           .body(new SessionResponse(
-              "The name have been used",
-              null,
-              null));
+              "The name have been used"));
     }
     var newUser = new User(userId, password);
     userMapper.insert(newUser);
@@ -152,22 +145,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
     return userMapper.selectOne(
         new QueryWrapper<User>().apply(
-          StringUtils.isNotEmpty((userId)),
-          "LOWER(name) LIKE CONCAT(CONCAT('%', {0}), '%')", 
-          userId.toLowerCase()
-        ));
+            StringUtils.isNotEmpty((userId)),
+            "LOWER(name) LIKE CONCAT(CONCAT('%', {0}), '%')",
+            userId.toLowerCase()));
   }
-  
+
   @Data
   static public class SessionResponse {
     private String user;
     private String role;
+    private String token;
     private String message;
 
+    public SessionResponse(String message, String user, String role, String token) {
+      this.message = message;
+      this.user = user;
+      this.role = role;
+      this.token = token;
+    }
+    
     public SessionResponse(String message, String user, String role) {
       this.message = message;
       this.user = user;
       this.role = role;
+    }
+
+    public SessionResponse(String message) {
+      this.message = message;
     }
   }
 }
