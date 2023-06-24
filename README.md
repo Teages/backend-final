@@ -51,7 +51,8 @@
 - `GET /session`: 获取当前登录信息
 - `POST /session/register`: 注册
 - `POST /session/login`: 登录
-- `DELETE /session`: 注销
+- `POST /session/logout`: 注销
+  > 不能用 `DELETE`
 
 用户系统
 
