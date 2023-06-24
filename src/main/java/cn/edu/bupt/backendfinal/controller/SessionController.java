@@ -1,7 +1,5 @@
 package cn.edu.bupt.backendfinal.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -15,10 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 public class SessionController {
-    private final static Logger log = LoggerFactory.getLogger(SessionController.class);
-
   @Autowired
-  public UserServiceImpl userService;
+  UserServiceImpl userService;
 
   @GetMapping("/session")
   public ResponseEntity<UserServiceImpl.SessionResponse> getSession(

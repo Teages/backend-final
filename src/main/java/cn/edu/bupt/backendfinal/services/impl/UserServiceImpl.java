@@ -27,7 +27,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
   @Autowired
-  private UserMapper userMapper;
+  UserMapper userMapper;
 
   static public String secret = "himitsu";
   JWTSigner signer = JWTSignerUtil.hs256(secret.getBytes(StandardCharsets.UTF_8));
@@ -67,11 +67,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       var cookieToken = new Cookie("token", token);
       // cookieToken.setSecure(true);
       cookieToken.setHttpOnly(true);
+      cookieToken.setPath("/");
       cookieToken.setMaxAge(7 * 24 * 60 * 60);
       response.addCookie(cookieToken);
       
       var cookieRole = new Cookie("role", user.getRole());
       cookieRole.setMaxAge(7 * 24 * 60 * 60);
+      cookieRole.setPath("/");
       response.addCookie(cookieRole);
 
       return ResponseEntity.ok()
@@ -93,6 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       // cookie.setSecure(true);
       cookie.setHttpOnly(true);
       cookie.setMaxAge(0);
+      cookie.setPath("/");
       response.addCookie(cookie);
       return ResponseEntity.ok()
         .body(new SessionResponse(
@@ -142,6 +145,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     return null;
   }
 
+  public User findByUid(String userId) {
+    return userMapper.selectOne(
+        new QueryWrapper<User>().eq("name", userId));
+  }
+  
   @Data
   static public class SessionResponse {
     private String user;
