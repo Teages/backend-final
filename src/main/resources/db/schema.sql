@@ -1,8 +1,17 @@
 DROP TABLE IF EXISTS users;
-
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   name VARCHAR(32) NOT NULL,
   password CHAR(64) NOT NULL,
   role VARCHAR(32) NOT NULL
+);
+
+DROP TABLE IF EXISTS products;
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  owner_id INTEGER NOT NULL,
+  price INTEGER NOT NULL,
+  description TEXT,
+  stock INTEGER NOT NULL
 );

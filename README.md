@@ -46,7 +46,7 @@
 
 ## 接口设计
 
-登录系统
+登录系统 (DONE)
 
 - `GET /session`: 获取当前登录信息
 - `POST /session/register?user={userId}&password={password}`: 注册
@@ -54,7 +54,7 @@
 - `POST /session/logout`: 注销
   > 不能用 `DELETE`
 
-权限系统
+权限系统 (DONE)
 
 - `POST /studio/upgrade/host?user={userId}`: 将对应 ID 的用户从用户升级为主播
 - `POST /studio/upgrade/admin?user={userId}`: 将对应 ID 的用户从用户或主播升级为管理员
@@ -64,21 +64,21 @@
 
 - `/user/*`: 映射到 `/users/{userId}/*`, 以当前登录用户的 ID 进行填充
 - `GET /users/{userId}`: 查看对应 ID 的用户信息
-- `GET /users/{userId}/items`: 查看对应 ID 的商品
+- `GET /users/{userId}/products`: 查看对应 ID 的商品
 - `GET /users/{userId}/comments`: 查看对应 ID 的评论
 - `GET /users/{userId}/orders`: 查看对应 ID 的订单
 - `GET /users/{userId}/lives`: 查看对应 ID 的直播间
 
 商品系统
 
-- `GET /items`: 全部商品
-- `POST /items`: 新建商品
-- `GET /items/{itemId}`: 商品详细
-- `PUT /items/{itemId}`: 更新商品详细
-- `DELETE /items/{itemId}`: 删除商品
+- `GET /products`: 全部商品
+- `POST /products`: 新建商品
+- `GET /products/{productId}`: 商品详细
+- `PUT /products/{productId}`: 更新 (部分) 商品详细
+- `DELETE /products/{productId}`: 删除商品
 
-- `GET /items/{itemId}/comments`: 按商品 ID 检索评论
-- `POST /items/{itemId}/comments`: 向商品发送评论
+- `GET /products/{productId}/comments`: 按商品 ID 检索评论
+- `POST /products/{productId}/comments`: 向商品发送评论
 
 评论系统 (商品评论)
 

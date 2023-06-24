@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 @Service
@@ -49,8 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   public ResponseEntity<SessionResponse> login(String userId, String password, HttpServletResponse response) {
-    var user = userMapper.selectOne(
-        new QueryWrapper<User>().eq("name", userId));
+    var user = findByUid(userId);
     if (user != null && user.verify(password)) {
       var createAt = Calendar.getInstance();
       var expiresAt = Calendar.getInstance();
@@ -105,8 +105,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   public ResponseEntity<SessionResponse> register(String userId, String password, HttpServletResponse response) {
-    var user = userMapper.selectOne(
-        new QueryWrapper<User>().eq("name", userId));
+    var user = findByUid(userId);
     if (user != null) {
       return ResponseEntity.status(HttpStatus.CONFLICT)
           .body(new SessionResponse(
@@ -138,16 +137,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     var userId = (String) jwt.getPayload("user");
     if (userId != null) {
-      var user = userMapper.selectOne(
-          new QueryWrapper<User>().eq("name", userId));
+      var user = findByUid(userId);
       return user;
     }
     return null;
   }
 
   public User findByUid(String userId) {
+    if (userId == null) {
+      return null;
+    }
     return userMapper.selectOne(
-        new QueryWrapper<User>().eq("name", userId));
+        new QueryWrapper<User>().apply(
+          StringUtils.isNotEmpty((userId)),
+          "LOWER(name) LIKE CONCAT(CONCAT('%', {0}), '%')", 
+          userId.toLowerCase()
+        ));
   }
   
   @Data
