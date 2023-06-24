@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -60,7 +58,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
   }
 
   public ResponseEntity<ProductResponse> getProduct(
-      @PathVariable Integer productId) {
+      Integer productId) {
     var product = getById(productId);
     if (product == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -71,8 +69,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
   }
 
   public ResponseEntity<ProductResponse> updateProduct(
-      @CookieValue(name = "token", required = false) String token,
-      @PathVariable Integer productId,
+      String token,
+      Integer productId,
       ProductRequest productData) {
     var user = userService.whoami(token);
     var product = getById(productId);
@@ -94,8 +92,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
   }
 
   public ResponseEntity<ProductResponse> removeProduct(
-      @CookieValue(name = "token", required = false) String token,
-      @PathVariable Integer productId
+      String token,
+      Integer productId
   ) {
     var user = userService.whoami(token);
     var product = getById(productId);

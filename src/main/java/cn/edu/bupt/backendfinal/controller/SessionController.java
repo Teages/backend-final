@@ -2,13 +2,14 @@ package cn.edu.bupt.backendfinal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.edu.bupt.backendfinal.services.impl.UserServiceImpl;
+import cn.edu.bupt.backendfinal.Util;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -24,9 +25,9 @@ public class SessionController {
   @GetMapping("/session")
   @Operation(description = "登录状态查询")
   public ResponseEntity<UserServiceImpl.SessionResponse> getSession(
-    @CookieValue(name="token", required = false) String token
+    @RequestHeader(value = "Authorization", required = false) String auth
   ) {
-    return userService.getSession(token);
+    return userService.getSession(Util.decodeAuth(auth));
   }
 
   @PostMapping("/session/register")

@@ -4,15 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.edu.bupt.backendfinal.Util;
 import cn.edu.bupt.backendfinal.services.impl.ProductServiceImpl;
 import cn.edu.bupt.backendfinal.services.impl.ProductServiceImpl.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,10 +36,10 @@ public class ProductController {
   @PostMapping("/products")
   @Operation(description = "新增商品, 仅管理员和主播可以操作")
   public ResponseEntity<ProductResponse> createProducts(
-      @CookieValue(name = "token", required = false) String token,
+      @RequestHeader(value = "Authorization", required = false) String auth,
       @RequestBody ProductServiceImpl.ProductRequest product
   ) {
-    return productService.createProducts(token, product);
+    return productService.createProducts(Util.decodeAuth(auth), product);
   }
 
   @GetMapping("/products/{productId}")
@@ -57,10 +58,10 @@ public class ProductController {
     @Parameter(name = "productId", description = "商品 ID", required = true)
   })
   public ResponseEntity<ProductResponse> updateProduct(
-      @CookieValue(name = "token", required = false) String token,
+      @RequestHeader(value = "Authorization", required = false) String auth,
       @PathVariable Integer productId,
       @RequestBody ProductServiceImpl.ProductRequest product) {
-    return productService.updateProduct(token, productId, product);
+    return productService.updateProduct(Util.decodeAuth(auth), productId, product);
   }
 
   @DeleteMapping("/products/{productId}")
@@ -69,9 +70,9 @@ public class ProductController {
     @Parameter(name = "productId", description = "商品 ID", required = true)
   })
   public ResponseEntity<ProductResponse> removeProduct(
-      @CookieValue(name = "token", required = false) String token,
+      @RequestHeader(value = "Authorization", required = false) String auth,
       @PathVariable Integer productId) {
-    return productService.removeProduct(token, productId);
+    return productService.removeProduct(Util.decodeAuth(auth), productId);
   }
 
   @PostMapping("/products/{productId}/comments")

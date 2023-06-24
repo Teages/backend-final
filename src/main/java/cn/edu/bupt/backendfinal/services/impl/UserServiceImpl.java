@@ -128,16 +128,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (token == null) {
       return null;
     }
-    JWTUtil.verify(token, signer);
-    final var jwt = JWTUtil.parseToken(token);
-    JWTValidator.of(jwt)
-        .validateAlgorithm(signer)
-        .validateDate(DateUtil.date());
+    try {
+      JWTUtil.verify(token, signer);
+      final var jwt = JWTUtil.parseToken(token);
+      JWTValidator.of(jwt)
+          .validateAlgorithm(signer)
+          .validateDate(DateUtil.date());
 
-    var userId = (String) jwt.getPayload("user");
-    if (userId != null) {
-      var user = findByUid(userId);
-      return user;
+      var userId = (String) jwt.getPayload("user");
+      if (userId != null) {
+        var user = findByUid(userId);
+        return user;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return null;
   }

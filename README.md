@@ -80,7 +80,7 @@
 - `GET /products/{productId}/comments`: 按商品 ID 检索评论
 - `POST /products/{productId}/comments`: 向商品发送评论
 
-评论系统 (商品评论)
+评论系统 (商品评论) (DONE)
 
 - `GET /comments/{commentId}`: 评论详细
 - `POST /comments/{commentId}`: 回复评论
