@@ -19,12 +19,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.edu.bupt.backendfinal.entity.Product;
 import cn.edu.bupt.backendfinal.entity.User;
 import cn.edu.bupt.backendfinal.mapper.ProductMapper;
-import cn.edu.bupt.backendfinal.services.ProductServices;
+import cn.edu.bupt.backendfinal.services.ProductService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Service
-public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductServices {
+public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductService {
   @Autowired
   ProductMapper productMapper;
 
@@ -32,7 +32,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
   UserServiceImpl userService;
 
   @Autowired
-  CommentServicesImpl commentServices;
+  CommentServiceImpl commentServices;
 
   public List<ProductResponse> getAllProducts() {
     var products = productMapper.selectList(
@@ -114,19 +114,19 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     return ResponseEntity.ok().body(new ProductResponse(product, owner, "Successfully removed"));
   }
 
-  public List<CommentServicesImpl.CommentResponse> getComment(
+  public List<CommentServiceImpl.CommentResponse> getComment(
       Integer productId) {
     return commentServices.getAllCommentBuilder("product", productId);
   }
 
-  public ResponseEntity<CommentServicesImpl.CommentResponse> createComment(
+  public ResponseEntity<CommentServiceImpl.CommentResponse> createComment(
       String token,
       Integer productId,
-      CommentServicesImpl.CommentRequest commentData) {
+      CommentServiceImpl.CommentRequest commentData) {
     var user = userService.whoami(token);
     if (user == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-          new CommentServicesImpl.CommentResponse("You haven't logged in yet"));
+          new CommentServiceImpl.CommentResponse("You haven't logged in yet"));
     }
     return ResponseEntity.ok(commentServices.createCommentBuilder(
         user, "product", productId, commentData.getContent()));

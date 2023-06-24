@@ -23,3 +23,13 @@ INSERT INTO comments (category, category_id, owner_id, create_date, content)
 SELECT 'comment', 1, u.id, NOW(), 'Test Reply Comment'
 FROM users as u
 WHERE u.name = 'Teages';
+
+INSERT INTO cart_items (product_id, title, price, description, count)
+SELECT p.id, p.title, p.price, p.description, 1
+FROM products as p
+WHERE p.id = 1;
+
+INSERT INTO orders (owner_id, create_date, status, total_price, cart)
+SELECT u.id, NOW(), 'pending', 100, ARRAY[1]
+FROM users as u
+WHERE u.name = 'Teages';

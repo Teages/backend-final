@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.edu.bupt.backendfinal.Util;
-import cn.edu.bupt.backendfinal.services.impl.CommentServicesImpl;
-import cn.edu.bupt.backendfinal.services.impl.CommentServicesImpl.CommentResponse;
+import cn.edu.bupt.backendfinal.services.impl.CommentServiceImpl;
+import cn.edu.bupt.backendfinal.services.impl.CommentServiceImpl.CommentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "评论系统", description = "comment")
 public class CommentController {
   @Autowired
-  CommentServicesImpl commentServices;
+  CommentServiceImpl commentServices;
 
   @GetMapping("/comments/{commentId}")
   @Operation(description = "查询评论")
@@ -42,7 +42,7 @@ public class CommentController {
   public ResponseEntity<CommentResponse> createComment(
       @RequestHeader(value = "Authorization", required = false) String auth,
       @PathVariable Integer commentId,
-      CommentServicesImpl.CommentRequest commentRequest) {
+      CommentServiceImpl.CommentRequest commentRequest) {
     return commentServices.createComment(Util.decodeAuth(auth), commentId, commentRequest);
   }
 

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.edu.bupt.backendfinal.services.impl.StudioServicesImpl;
+import cn.edu.bupt.backendfinal.services.impl.StudioServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -18,14 +18,14 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "权限管理", description = "Studio")
 public class StudioController {
   @Autowired
-  StudioServicesImpl studioServices;
+  StudioServiceImpl studioServices;
   
   @PostMapping("/studio/upgrade/host")
   @Operation(description = "将用户的权限提升为主播")
   @Parameters({
     @Parameter(name = "user", description = "用户 ID", required = true)
   })
-  public ResponseEntity<StudioServicesImpl.StudioResponse> upgradeHost(
+  public ResponseEntity<StudioServiceImpl.StudioResponse> upgradeHost(
     @CookieValue(name="token", required = false) String token,
     @RequestParam String user,
     HttpServletResponse response
@@ -38,7 +38,7 @@ public class StudioController {
   @Parameters({
     @Parameter(name = "user", description = "用户 ID", required = true)
   })
-  public ResponseEntity<StudioServicesImpl.StudioResponse> upgradeAdmin(
+  public ResponseEntity<StudioServiceImpl.StudioResponse> upgradeAdmin(
     @CookieValue(name="token", required = false) String token,
     @RequestParam String user,
     HttpServletResponse response
@@ -51,7 +51,7 @@ public class StudioController {
   @Parameters({
     @Parameter(name = "user", description = "用户 ID", required = true)
   })
-  public ResponseEntity<StudioServicesImpl.StudioResponse> downgrade(
+  public ResponseEntity<StudioServiceImpl.StudioResponse> downgrade(
     @CookieValue(name="token", required = false) String token,
     @RequestParam String user,
     HttpServletResponse response

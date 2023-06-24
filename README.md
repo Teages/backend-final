@@ -93,6 +93,11 @@
 - `GET /orders/{orderId}`: 查看对应 ID 的订单
 - `DELETE /orders/{orderId}`: 取消对应 ID 的订单
 
+> 订单状态
+>   - `pending`: 已创建
+>   - `paid`: 已支付
+>   - `canceled`: 已取消
+
 支付系统
 
 - `/pay/{orderId}`: 模拟支付对应的订单

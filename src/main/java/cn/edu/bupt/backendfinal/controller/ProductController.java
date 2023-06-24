@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.edu.bupt.backendfinal.Util;
-import cn.edu.bupt.backendfinal.services.impl.CommentServicesImpl;
+import cn.edu.bupt.backendfinal.services.impl.CommentServiceImpl;
 import cn.edu.bupt.backendfinal.services.impl.ProductServiceImpl;
 import cn.edu.bupt.backendfinal.services.impl.ProductServiceImpl.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -80,7 +80,7 @@ public class ProductController {
   @Parameters({
       @Parameter(name = "productId", description = "商品 ID", required = true)
   })
-  public List<CommentServicesImpl.CommentResponse> getComment(
+  public List<CommentServiceImpl.CommentResponse> getComment(
       @PathVariable Integer productId) {
     return productService.getComment(productId);
   }
@@ -90,10 +90,10 @@ public class ProductController {
   @Parameters({
       @Parameter(name = "productId", description = "商品 ID", required = true),
   })
-  public ResponseEntity<CommentServicesImpl.CommentResponse> addComment(
+  public ResponseEntity<CommentServiceImpl.CommentResponse> addComment(
       @RequestHeader(value = "Authorization", required = false) String auth,
       @PathVariable Integer productId,
-      @RequestBody CommentServicesImpl.CommentRequest comment) {
+      @RequestBody CommentServiceImpl.CommentRequest comment) {
     return productService.createComment(Util.decodeAuth(auth), productId, comment);
   }
 }

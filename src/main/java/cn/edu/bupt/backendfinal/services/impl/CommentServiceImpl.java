@@ -16,12 +16,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import cn.edu.bupt.backendfinal.entity.Comment;
 import cn.edu.bupt.backendfinal.entity.User;
 import cn.edu.bupt.backendfinal.mapper.CommentMapper;
-import cn.edu.bupt.backendfinal.services.CommentServices;
+import cn.edu.bupt.backendfinal.services.CommentService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Service
-public class CommentServicesImpl extends ServiceImpl<CommentMapper, Comment> implements CommentServices {
+public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
   @Autowired
   CommentMapper commentMapper;
 

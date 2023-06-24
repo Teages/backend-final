@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 
 @Service
-public class StudioServicesImpl {
+public class StudioServiceImpl {
   @Autowired
   UserServiceImpl userService;
 
