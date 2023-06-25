@@ -104,7 +104,7 @@
 
 - `/pay/{orderId}`: 模拟支付对应的订单
 
-直播系统 (DONE 3/5)
+直播系统 (DONE 4/5)
 
 - `GET /live`: 查看所有直播间
 - `POST /live`: 新建直播间
