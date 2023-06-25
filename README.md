@@ -108,7 +108,7 @@
 - `GET /live`: 查看所有直播间
 - `POST /live`: 新建直播间
 - `GET /live/{liveId}`: 获取对应 ID 的直播间信息
-- `UPGRADE(WEBSOCKET) /live/{liveId}/join`: 访问对应 ID 的直播间
+- `UPGRADE(WEBSOCKET) /live/{liveId}/danmaku`: 访问对应 ID 的直播间
   - `WEBSOCKET.SEND` 发送文字消息 (弹幕)
 - `DELETE /live/{liveId}`: 停用对应 ID 的直播间
 
@@ -132,8 +132,7 @@
 2. 用户连接到直播间 websocket
 3. 用户发送文字消息
 4. 系统将文字消息存储到 redis 中 (消息队列)
-5. 系统检查消息队列, 对直播间所有人广播未发送的消息
-6. 系统对新进入直播间的广播一段时间内的消息
+5. 系统监听消息队列, 对直播间所有人广播新的消息
 
 ## 数据库设计
 

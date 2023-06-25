@@ -11,6 +11,10 @@ spring:
       mode: always
   jackson:
     default-property-inclusion: non_null
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 mybatis-plus:
   type-handlers-package: cn.edu.bupt.backendfinal.handler
 server:

@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.edu.bupt.backendfinal.Util;
+import cn.edu.bupt.backendfinal.services.impl.DanmakuServicesImpl;
 import cn.edu.bupt.backendfinal.services.impl.LiveServiceImpl;
+import cn.edu.bupt.backendfinal.services.impl.DanmakuServicesImpl.DanmakuRequest;
+import cn.edu.bupt.backendfinal.services.impl.DanmakuServicesImpl.DanmakuResponse;
 import cn.edu.bupt.backendfinal.services.impl.LiveServiceImpl.LiveResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,6 +29,9 @@ public class LiveController {
   @Autowired
   LiveServiceImpl liveServices;
 
+  @Autowired
+  DanmakuServicesImpl danmakuServices;
+
   @GetMapping("/lives")
   @Operation(description = "查询全部直播")
   public ResponseEntity<List<LiveResponse>> getLives() {
@@ -35,9 +41,8 @@ public class LiveController {
   @PostMapping("/lives")
   @Operation(description = "创建直播")
   public ResponseEntity<LiveResponse> createLive(
-      @RequestHeader(value = "Authorization", required = false) String auth, 
-      @RequestBody LiveServiceImpl.LiveRequest liveRequest
-  ) {
+      @RequestHeader(value = "Authorization", required = false) String auth,
+      @RequestBody LiveServiceImpl.LiveRequest liveRequest) {
     return liveServices.createLive(Util.decodeAuth(auth), liveRequest);
   }
 
@@ -47,8 +52,7 @@ public class LiveController {
       @Parameter(name = "liveId", description = "直播 ID", required = true, example = "1")
   })
   public ResponseEntity<LiveResponse> getLive(
-      @PathVariable Integer liveId
-  ) {
+      @PathVariable Integer liveId) {
     return liveServices.getLive(liveId);
   }
 
@@ -59,9 +63,20 @@ public class LiveController {
   })
   public ResponseEntity<LiveResponse> closeLive(
       @RequestHeader(value = "Authorization", required = false) String auth,
-      @PathVariable Integer liveId
-  ) {
+      @PathVariable Integer liveId) {
     return liveServices.deleteLive(Util.decodeAuth(auth), liveId);
+  }
+
+  @PostMapping("/lives/{liveId}")
+  @Operation(description = "发送文字消息")
+  @Parameters({
+      @Parameter(name = "liveId", description = "直播 ID", required = true, example = "1")
+  })
+  public ResponseEntity<DanmakuResponse> sendDanmaku(
+      @RequestHeader(value = "Authorization", required = false) String auth,
+      @PathVariable Integer liveId,
+      @RequestBody DanmakuRequest danmakuRequest) {
+    return danmakuServices.addDanmaku(Util.decodeAuth(auth), liveId, danmakuRequest.getContent());
   }
 
 }
