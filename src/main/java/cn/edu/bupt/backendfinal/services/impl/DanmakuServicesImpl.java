@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import cn.hutool.http.HttpStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Resource;
 import lombok.Data;
 
@@ -58,7 +59,9 @@ public class DanmakuServicesImpl {
   }
 
   @Data
+  @Schema(description = "直播间文字消息请求")
   public static class DanmakuRequest {
+    @Schema(description = "弹幕内容", required = true, example = "一条友善的弹幕")
     private String content;
 
     public DanmakuRequest(String content) {

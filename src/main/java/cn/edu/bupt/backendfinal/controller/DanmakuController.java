@@ -1,6 +1,7 @@
 package cn.edu.bupt.backendfinal.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,13 +43,17 @@ public class DanmakuController {
     if (danmakuControllerMap.containsKey(liveId)) {
       danmakuControllerMap.get(liveId).add(this);
     } else {
-      danmakuControllerMap.put(liveId, List.of(this));
+      danmakuControllerMap.put(liveId, new ArrayList<DanmakuController>(List.of(this)));
     }
     addOnlineCount();
     new Thread(() -> {
       while (true) {
         try {
-          sendMessage(messageService.consume(String.format("live:%s", liveId)));
+          var message = messageService.consume(String.format("live:%s", liveId));
+          if (!session.isOpen()) {
+            break;
+          }
+          sendMessage(message);
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -59,7 +64,11 @@ public class DanmakuController {
   @OnClose
   public void onClose() {
     subOnlineCount();
-    danmakuControllerMap.get(liveId).remove(this);
+    try {
+      danmakuControllerMap.get(liveId).remove(this);
+    } catch (Exception e) {
+      // Ignore
+    }
   }
 
   @OnMessage
