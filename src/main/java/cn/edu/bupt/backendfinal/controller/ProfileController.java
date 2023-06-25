@@ -30,7 +30,7 @@ public class ProfileController {
   @GetMapping("/profiles/{userUid}/products")
   @Operation(description = "获取用户的商品列表")
   @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
+      @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
   })
   public ResponseEntity<List<ProductResponse>> getProfileProducts(
       @RequestHeader(value = "Authorization", required = false) String auth,
@@ -41,7 +41,7 @@ public class ProfileController {
   @GetMapping("/profiles/{userUid}/comments")
   @Operation(description = "获取用户的评论列表")
   @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
+      @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
   })
   public ResponseEntity<List<CommentResponse>> getProfileComments(
       @RequestHeader(value = "Authorization", required = false) String auth,
@@ -52,7 +52,7 @@ public class ProfileController {
   @GetMapping("/profiles/{userUid}/orders")
   @Operation(description = "获取用户的订单列表")
   @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
+      @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
   })
   public ResponseEntity<List<OrderResponse>> getProfileOrders(
       @RequestHeader(value = "Authorization", required = false) String auth,
@@ -63,7 +63,7 @@ public class ProfileController {
   @GetMapping("/profiles/{userUid}/Live")
   @Operation(description = "获取用户的直播间列表")
   @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
+      @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
   })
   public ResponseEntity<List<LiveResponse>> getProfileLives(
       @RequestHeader(value = "Authorization", required = false) String auth,
@@ -74,71 +74,47 @@ public class ProfileController {
   @GetMapping("/profiles/{userUid}")
   @Operation(description = "获取用户的信息")
   @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
+      @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
   })
   public ResponseEntity<ProfileResponse> getProfileAll(
       @RequestHeader(value = "Authorization", required = false) String auth,
       @PathVariable String userUid) {
-        return profileServices.getProfileAll(Util.decodeAuth(auth), userUid);
+    return profileServices.getProfileAll(Util.decodeAuth(auth), userUid);
   }
-
-
-
 
   @GetMapping("/profile/products")
   @Operation(description = "获取自己的商品列表")
-  @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
-  })
   public ResponseEntity<List<ProductResponse>> getMyProfileProducts(
-      @RequestHeader(value = "Authorization", required = false) String auth
-) {
+      @RequestHeader(value = "Authorization", required = false) String auth) {
     return profileServices.getMyProfileProduct(Util.decodeAuth(auth));
   }
 
   @GetMapping("/profile/comments")
   @Operation(description = "获取自己的评论列表")
-  @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
-  })
   public ResponseEntity<List<CommentResponse>> getMyProfileComments(
-      @RequestHeader(value = "Authorization", required = false) String auth
-) {
+      @RequestHeader(value = "Authorization", required = false) String auth) {
     return profileServices.getMyProfileComment(Util.decodeAuth(auth));
   }
 
   @GetMapping("/profile/orders")
   @Operation(description = "获取自己的订单列表")
-  @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
-  })
   public ResponseEntity<List<OrderResponse>> getMyProfileOrders(
-      @RequestHeader(value = "Authorization", required = false) String auth
-) {
+      @RequestHeader(value = "Authorization", required = false) String auth) {
     return profileServices.getMyProfileOrder(Util.decodeAuth(auth));
   }
 
   @GetMapping("/profile/Live")
   @Operation(description = "获取自己的直播间列表")
-  @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
-  })
   public ResponseEntity<List<LiveResponse>> getMyProfileLives(
-      @RequestHeader(value = "Authorization", required = false) String auth
-) {
+      @RequestHeader(value = "Authorization", required = false) String auth) {
     return profileServices.getMyProfileLive(Util.decodeAuth(auth));
   }
 
   @GetMapping("/profile")
   @Operation(description = "获取自己的信息")
-  @Parameters({
-    @Parameter(name = "userUid", description = "用户 ID", required = true, example = "Teages")
-  })
   public ResponseEntity<ProfileResponse> getMyProfileAll(
-      @RequestHeader(value = "Authorization", required = false) String auth
-) {
-        return profileServices.getMyProfileAll(Util.decodeAuth(auth));
+      @RequestHeader(value = "Authorization", required = false) String auth) {
+    return profileServices.getMyProfileAll(Util.decodeAuth(auth));
   }
-
 
 }

@@ -62,9 +62,9 @@
 - `POST /studio/upgrade/admin?user={userUid}`: 将对应 ID 的用户从用户或主播升级为管理员
 - `POST /studio/downgrade?user={userUid}`: 将对应 ID 的用户降级为普通用户
 
-用户系统 (最后完成)
+用户系统 (DONE) 
 
-- `/profile/*`: 映射到 `/users/{userUid}/*`, 以当前登录用户的 ID 进行填充
+- `/profile/*`: 映射到 `/users/{userUid}/*`, 以当前登录用户的 ID 进行填充, 查询自己的信息
 - `GET /profiles/{userUid}/products`: 查看对应 ID 的商品
 - `GET /profiles/{userUid}/comments`: 查看对应 ID 的评论
 - `GET /profiles/{userUid}/orders`: 查看对应 ID 的订单

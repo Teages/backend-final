@@ -1,6 +1,5 @@
 package cn.edu.bupt.backendfinal.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,32 +69,51 @@ public class ProfileServiceImpl {
   public ResponseEntity<List<ProductServiceImpl.ProductResponse>> getProfileProduct(
       String token, String ownerUid) {
     var owner = userService.findByUid(ownerUid);
-    return ResponseEntity.ok(getProducts(owner));
+    var ans = getProducts(owner);
+    if (ans == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+    return ResponseEntity.ok(ans);
   }
 
   public ResponseEntity<List<CommentServiceImpl.CommentResponse>> getProfileComment(
       String token, String ownerUid) {
     var user = userService.whoami(token);
     var owner = userService.findByUid(ownerUid);
-    return ResponseEntity.ok(getComments(user, owner));
+    var ans = getComments(user, owner);
+    if (ans == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+    return ResponseEntity.ok(ans);
   }
 
   public ResponseEntity<List<OrderServiceImpl.OrderResponse>> getProfileOrder(
       String token, String ownerUid) {
     var user = userService.whoami(token);
     var owner = userService.findByUid(ownerUid);
-    return ResponseEntity.ok(getOrders(user, owner));
+    var ans = getOrders(user, owner);
+    if (ans == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+    return ResponseEntity.ok(ans);
   }
 
   public ResponseEntity<List<LiveServiceImpl.LiveResponse>> getProfileLive(
       String token, String ownerUid) {
     var owner = userService.findByUid(ownerUid);
-    return ResponseEntity.ok(getLives(owner));
+    var ans = getLives(owner);
+    if (ans == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+    return ResponseEntity.ok(ans);
   }
 
   public ResponseEntity<ProfileResponse> getProfileAll(String token, String ownerUid) {
     var user = userService.whoami(token);
     var owner = userService.findByUid(ownerUid);
+    if (owner == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
 
     var products = getProducts(owner);
     var orders = getOrders(user, owner);
@@ -121,7 +139,7 @@ public class ProfileServiceImpl {
   }
 
   private List<CommentResponse> getComments(User user, User owner) {
-    if (user == null || !user.getId().equals(owner.getId()) || !user.isAdmin()) {
+    if (user == null || !(user.getId().equals(owner.getId()) || user.isAdmin())) {
       // 只能看自己的评论, 管理员可看所有评论
       return null;
     }
@@ -135,7 +153,7 @@ public class ProfileServiceImpl {
   }
 
   private List<OrderResponse> getOrders(User user, User owner) {
-    if (user == null || !user.getId().equals(owner.getId()) || !user.isAdmin()) {
+    if (user == null || !(user.getId().equals(owner.getId()) || user.isAdmin())) {
       // 只能看自己的订单, 管理员可看所有订单
       return null;
     }
