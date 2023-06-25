@@ -33,3 +33,8 @@ INSERT INTO orders (owner_id, create_date, status, total_price, cart)
 SELECT u.id, NOW(), 'pending', 100, ARRAY[1]
 FROM users as u
 WHERE u.name = 'Teages';
+
+INSERT INTO lives (title, owner_id)
+SELECT 'Test Live', u.id
+FROM users as u
+WHERE u.name = 'Teages';

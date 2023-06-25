@@ -46,3 +46,11 @@ CREATE TABLE cart_items (
   description TEXT,
   count INTEGER NOT NULL
 );
+
+DROP TABLE IF EXISTS lives;
+CREATE TABLE lives (
+  id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  owner_id INTEGER NOT NULL,
+  deleted BOOLEAN NOT NULL DEFAULT FALSE
+);

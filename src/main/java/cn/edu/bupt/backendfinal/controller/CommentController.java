@@ -36,7 +36,6 @@ public class CommentController {
   @PostMapping("/comments/{commentId}")
   @Operation(description = "回复评论")
   @Parameters({
-    @Parameter(name = "token", description = "用户 token (由 cookie 提供)", required = true, example = "header.payload.signature"),
     @Parameter(name = "commentId", description = "评论 ID", required = true, example = "1")
   })
   public ResponseEntity<CommentResponse> createComment(
@@ -49,7 +48,6 @@ public class CommentController {
   @DeleteMapping("/comments/{commentId}")
   @Operation(description = "删除评论")
   @Parameters({
-    @Parameter(name = "token", description = "用户 token (由 cookie 提供)", required = true, example = "header.payload.signature"),
     @Parameter(name = "commentId", description = "评论 ID", required = true, example = "1")
   })
   public ResponseEntity<CommentResponse> deleteComment(
