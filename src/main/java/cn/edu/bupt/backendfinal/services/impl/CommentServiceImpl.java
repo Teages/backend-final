@@ -42,6 +42,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
       Integer id,
       CommentRequest commentRequest) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(Response.SC_UNAUTHORIZED).body(
+          new CommentResponse("Unauthorized"));
+    }
     return ResponseEntity.ok(
         createCommentBuilder(user, "comment", id, commentRequest.getContent()));
   }
@@ -50,6 +54,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
       String token,
       Integer id) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(Response.SC_UNAUTHORIZED).body(
+          new CommentResponse("Unauthorized"));
+    }
     var comment = commentMapper.selectById(id);
     if (comment == null) {
       return ResponseEntity.status(Response.SC_NOT_FOUND).body(

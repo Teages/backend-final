@@ -40,29 +40,44 @@ public class ProfileServiceImpl {
   public ResponseEntity<List<ProductServiceImpl.ProductResponse>> getMyProfileProduct(
       String token) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
     return getProfileProduct(token, user.getName());
   }
 
   public ResponseEntity<List<CommentServiceImpl.CommentResponse>> getMyProfileComment(
       String token) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
     return getProfileComment(token, user.getName());
   }
 
   public ResponseEntity<List<OrderServiceImpl.OrderResponse>> getMyProfileOrder(
       String token) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
     return getProfileOrder(token, user.getName());
   }
 
   public ResponseEntity<List<LiveServiceImpl.LiveResponse>> getMyProfileLive(
       String token) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
     return getProfileLive(token, user.getName());
   }
 
   public ResponseEntity<ProfileResponse> getMyProfileAll(String token) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
     return getProfileAll(token, user.getName());
   }
 
@@ -79,6 +94,9 @@ public class ProfileServiceImpl {
   public ResponseEntity<List<CommentServiceImpl.CommentResponse>> getProfileComment(
       String token, String ownerUid) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
     var owner = userService.findByUid(ownerUid);
     var ans = getComments(user, owner);
     if (ans == null) {
@@ -90,6 +108,9 @@ public class ProfileServiceImpl {
   public ResponseEntity<List<OrderServiceImpl.OrderResponse>> getProfileOrder(
       String token, String ownerUid) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
     var owner = userService.findByUid(ownerUid);
     var ans = getOrders(user, owner);
     if (ans == null) {

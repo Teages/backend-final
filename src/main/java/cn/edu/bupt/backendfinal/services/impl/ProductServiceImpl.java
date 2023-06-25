@@ -77,6 +77,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
       Integer productId,
       ProductRequest productData) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+          ProductResponse.message("You haven't logged in yet"));
+    }
     var product = getById(productId);
     if (product == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -99,6 +103,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
       String token,
       Integer productId) {
     var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+          ProductResponse.message("You haven't logged in yet"));
+    }
     var product = getById(productId);
     if (product == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
