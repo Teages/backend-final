@@ -34,6 +34,10 @@ public class PayServiceImpl {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
           new OrderResponse("You have already paid for this order"));
     }
+    if (order.getStatus().equals("canceled")) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+          new OrderResponse("This order has been canceled"));
+    }
 
     order.setStatus("paid");
     orderService.updateById(order);

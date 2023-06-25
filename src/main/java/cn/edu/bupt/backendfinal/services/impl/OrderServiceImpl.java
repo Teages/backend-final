@@ -89,6 +89,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
       var product = productService.getById(cart.getProductId());
       order.getCart().add(cart.getId());
       product.setStock(product.getStock() - cart.getCount());
+      productService.updateById(product);
       order.setTotalPrice(order.getTotalPrice() + cart.getPrice() * cart.getCount());
     }
     
@@ -187,7 +188,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
   @Data
   public static class OrderResponse {
     private Integer id;
-    private Integer ownerId;
     private Date createDate;
     private String status;
     private Integer totalPrice;
@@ -203,16 +203,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     public OrderResponse(Order order) {
       this.id = order.getId();
-      this.ownerId = order.getOwnerId();
       this.createDate = order.getCreateDate();
       this.status = order.getStatus();
       this.totalPrice = order.getTotalPrice();
       this.cart = new ArrayList<CartResponse>();
     }
 
-    public OrderResponse(Integer id, Integer ownerId, Date createDate, String status, Integer totalPrice, List<CartResponse> cart) {
+    public OrderResponse(Integer id, Date createDate, String status, Integer totalPrice, List<CartResponse> cart) {
       this.id = id;
-      this.ownerId = ownerId;
       this.createDate = createDate;
       this.status = status;
       this.totalPrice = totalPrice;

@@ -46,6 +46,8 @@
 
 ## 接口设计
 
+> 访问 `/swagger-ui/index.html` 查看 OpenAPI
+
 登录系统 (DONE)
 
 - `GET /session`: 获取当前登录信息
@@ -86,7 +88,7 @@
 - `POST /comments/{commentId}`: 回复评论
 - `DELETE /comments/{commentId}`: 删除评论
 
-订单系统
+订单系统 (DONE)
 
 - `GET /orders`: 查看用户的订单
 - `POST /orders`: 提交一个新的订单
@@ -98,7 +100,7 @@
 >   - `paid`: 已支付
 >   - `canceled`: 已取消
 
-支付系统
+支付系统 (DONE)
 
 - `/pay/{orderId}`: 模拟支付对应的订单
 
