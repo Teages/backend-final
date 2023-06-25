@@ -41,10 +41,21 @@ public class LiveController {
     return liveServices.createLive(Util.decodeAuth(auth), liveRequest);
   }
 
+  @GetMapping("/lives/{liveId}")
+  @Operation(description = "查询直播")
+  @Parameters({
+      @Parameter(name = "liveId", description = "直播 ID", required = true, example = "1")
+  })
+  public ResponseEntity<LiveResponse> getLive(
+      @PathVariable Integer liveId
+  ) {
+    return liveServices.getLive(liveId);
+  }
+
   @DeleteMapping("/lives/{liveId}")
   @Operation(description = "关闭直播")
   @Parameters({
-      @Parameter(name = "liveId", description = "直播 ID", required = true)
+      @Parameter(name = "liveId", description = "直播 ID", required = true, example = "1")
   })
   public ResponseEntity<LiveResponse> closeLive(
       @RequestHeader(value = "Authorization", required = false) String auth,

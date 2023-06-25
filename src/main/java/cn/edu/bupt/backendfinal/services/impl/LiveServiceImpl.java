@@ -34,6 +34,15 @@ public class LiveServiceImpl extends ServiceImpl<LiveMapper, Live> implements Li
     return ResponseEntity.ok(liveResponses);
   }
 
+  public ResponseEntity<LiveResponse> getLive(Integer id) {
+    var live = liveMapper.selectById(id);
+    if (live == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+          new LiveResponse("Live not found"));
+    }
+    return ResponseEntity.ok(getLiveBuilder(live));
+  }
+
   public ResponseEntity<LiveResponse> createLive(
       String token,
       LiveRequest liveRequest) {

@@ -104,10 +104,11 @@
 
 - `/pay/{orderId}`: 模拟支付对应的订单
 
-直播系统 (DONE 3/4)
+直播系统 (DONE 3/5)
 
 - `GET /live`: 查看所有直播间
 - `POST /live`: 新建直播间
+- `GET /live/{liveId}`: 获取对应 ID 的直播间信息
 - `UPGRADE(WEBSOCKET) /live/{liveId}/join`: 访问对应 ID 的直播间
   - `WEBSOCKET.SEND` 发送文字消息 (弹幕)
 - `DELETE /live/{liveId}`: 停用对应 ID 的直播间
