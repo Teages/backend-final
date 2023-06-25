@@ -137,6 +137,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
           new CommentServiceImpl.CommentResponse("You haven't logged in yet"));
     }
+    var product = getById(productId);
+    if (product == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+          new CommentServiceImpl.CommentResponse(
+              String.format("Can not find product where id is %d", productId)));
+    }
     return ResponseEntity.ok(commentServices.createCommentBuilder(
         user, "product", productId, commentData.getContent()));
   }
