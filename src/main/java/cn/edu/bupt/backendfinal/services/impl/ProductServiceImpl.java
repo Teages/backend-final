@@ -36,7 +36,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
   public List<ProductResponse> getAllProducts() {
     var products = productMapper.selectList(
-        new QueryWrapper<Product>());
+        new QueryWrapper<Product>()
+        .gt("stock", 0)); // 忽略没库存的商品
     var list = new ArrayList<ProductResponse>();
     for (var product : products) {
       var owner = userService.getById(product.getOwnerId());
