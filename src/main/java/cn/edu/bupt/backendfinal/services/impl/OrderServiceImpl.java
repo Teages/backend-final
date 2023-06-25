@@ -146,7 +146,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     return getOrder(token, orderId);
   }
 
-  private OrderResponse getOrderBuilder(Order order) {
+  public OrderResponse getOrderBuilder(Order order) {
     var orderResponse = new OrderResponse(order);
     var cartsId = order.getCart();
     for (var cartId : cartsId) {

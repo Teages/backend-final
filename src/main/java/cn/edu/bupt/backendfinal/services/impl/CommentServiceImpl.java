@@ -144,6 +144,18 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
       this.replies = repliesData;
     }
 
+    
+
+    public CommentResponse(Comment comment, User owner) {
+      this.id = comment.getId();
+      this.category = comment.getCategory();
+      this.categoryId = comment.getCategoryId();
+      this.owner = owner.getName();
+      this.createDate = comment.getCreateDate();
+      this.content = comment.getDeleted() ? null : comment.getContent();
+      this.replies = null;
+    }
+
     public CommentResponse(String message) {
       this.message = message;
     }

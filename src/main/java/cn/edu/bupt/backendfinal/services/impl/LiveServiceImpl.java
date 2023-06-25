@@ -67,7 +67,7 @@ public class LiveServiceImpl extends ServiceImpl<LiveMapper, Live> implements Li
     return ResponseEntity.ok(getLiveBuilder(live));
   }
 
-  private LiveResponse getLiveBuilder(Live live) {
+  public LiveResponse getLiveBuilder(Live live) {
     var owner = userService.getById(live.getOwnerId());
     return new LiveResponse(live.getId(), live.getTitle(), owner);
   }

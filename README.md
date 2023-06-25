@@ -51,25 +51,25 @@
 登录系统 (DONE)
 
 - `GET /session`: 获取当前登录信息
-- `POST /session/register?user={userId}&password={password}`: 注册
-- `POST /session/login?user={userId}&password={password}`: 登录
+- `POST /session/register?user={userUid}&password={password}`: 注册
+- `POST /session/login?user={userUid}&password={password}`: 登录
 - `POST /session/logout`: 注销
   > 不能用 `DELETE`
 
 权限系统 (DONE)
 
-- `POST /studio/upgrade/host?user={userId}`: 将对应 ID 的用户从用户升级为主播
-- `POST /studio/upgrade/admin?user={userId}`: 将对应 ID 的用户从用户或主播升级为管理员
-- `POST /studio/downgrade?user={userId}`: 将对应 ID 的用户降级为普通用户
+- `POST /studio/upgrade/host?user={userUid}`: 将对应 ID 的用户从用户升级为主播
+- `POST /studio/upgrade/admin?user={userUid}`: 将对应 ID 的用户从用户或主播升级为管理员
+- `POST /studio/downgrade?user={userUid}`: 将对应 ID 的用户降级为普通用户
 
 用户系统 (最后完成)
 
-- `/user/*`: 映射到 `/users/{userId}/*`, 以当前登录用户的 ID 进行填充
-- `GET /users/{userId}`: 查看对应 ID 的用户信息
-- `GET /users/{userId}/products`: 查看对应 ID 的商品
-- `GET /users/{userId}/comments`: 查看对应 ID 的评论
-- `GET /users/{userId}/orders`: 查看对应 ID 的订单
-- `GET /users/{userId}/lives`: 查看对应 ID 的直播间
+- `/profile/*`: 映射到 `/users/{userUid}/*`, 以当前登录用户的 ID 进行填充
+- `GET /profiles/{userUid}/products`: 查看对应 ID 的商品
+- `GET /profiles/{userUid}/comments`: 查看对应 ID 的评论
+- `GET /profiles/{userUid}/orders`: 查看对应 ID 的订单
+- `GET /profiles/{userUid}/lives`: 查看对应 ID 的直播间
+- `GET /profiles/{userUid}`: 查看对应 ID 的全部用户信息
 
 商品系统 (DONE)
 
