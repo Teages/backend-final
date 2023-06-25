@@ -44,7 +44,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     var user = userService.whoami(token);
     if (user == null) {
       return ResponseEntity.status(Response.SC_UNAUTHORIZED).body(
-          new CommentResponse("Unauthorized"));
+          new CommentResponse("You haven't logged in yet"));
     }
     return ResponseEntity.ok(
         createCommentBuilder(user, "comment", id, commentRequest.getContent()));
@@ -56,7 +56,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     var user = userService.whoami(token);
     if (user == null) {
       return ResponseEntity.status(Response.SC_UNAUTHORIZED).body(
-          new CommentResponse("Unauthorized"));
+          new CommentResponse("You haven't logged in yet"));
     }
     var comment = commentMapper.selectById(id);
     if (comment == null) {
