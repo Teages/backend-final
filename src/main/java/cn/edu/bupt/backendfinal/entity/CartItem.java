@@ -15,15 +15,15 @@ public class CartItem {
   private String title;
   private Integer price; // 以分为单位
   private String description;
-  private Integer stock;
+  private Integer count;
 
   public CartItem() { }
 
-  public CartItem(Integer productId, String title, Integer price, String description, Integer stock) {
+  public CartItem(Integer productId, String title, Integer price, String description, Integer count) {
     this.productId = productId;
     this.title = title;
     this.price = price;
     this.description = description;
-    this.stock = stock;
+    this.count = count;
   }
 }

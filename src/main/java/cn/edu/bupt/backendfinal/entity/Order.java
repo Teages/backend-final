@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -18,6 +19,7 @@ public class Order {
   private Date createDate;
   private String status;
   private Integer totalPrice;
+  @TableField(typeHandler = cn.edu.bupt.backendfinal.handler.ListArrayTypeHandler.class)
   private List<Integer> cart;
 
   public Order() { }
