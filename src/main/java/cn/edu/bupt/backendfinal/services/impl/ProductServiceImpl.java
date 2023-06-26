@@ -50,10 +50,18 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
   public ResponseEntity<ProductResponse> createProducts(
       String token,
       ProductRequest productData) {
-    var owner = userService.whoami(token);
+    var user = userService.whoami(token);
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+          ProductResponse.message("You haven't logged in yet"));
+    }
+    if (!user.isHost(user.getName())) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+          ProductResponse.message("You have no permission to create product"));
+    }
     var product = new Product(
         productData.getTitle(),
-        owner.getId(),
+        user.getId(),
         productData.getPrice(),
         productData.getDescription(),
         productData.getStock());
