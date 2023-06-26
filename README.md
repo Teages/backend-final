@@ -1,5 +1,7 @@
 # BUPT Web 后端开发技术(2023) - 课程大作业
 
+> !!! 请不要将这份代码作为作业提交 !!!
+
 ## 题目
 直播电商应用系统后端设计与实现 
 
@@ -204,3 +206,6 @@ CREATE TABLE lives (
 2. workflow 打包 jar, 上传生产环境
 3. 生产环境重启
 
+以 [GLWT(Good Luck With That) Public License](https://github.com/me-shaon/GLWTPL) 分享, 作者不对任何使用情况负责
+
+> !!! 请不要将这份代码作为作业提交 !!!
