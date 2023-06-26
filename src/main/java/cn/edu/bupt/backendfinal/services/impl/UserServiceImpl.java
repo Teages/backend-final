@@ -146,7 +146,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     return userMapper.selectOne(
         new QueryWrapper<User>().apply(
             StringUtils.isNotEmpty((userId)),
-            "LOWER(name) LIKE CONCAT(CONCAT('%', {0}), '%')",
+            "LOWER(name) = {0}",
             userId.toLowerCase()));
   }
 

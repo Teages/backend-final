@@ -46,6 +46,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
       return ResponseEntity.status(Response.SC_UNAUTHORIZED).body(
           new CommentResponse("You haven't logged in yet"));
     }
+    var comment = commentMapper.selectById(id);
+    if (comment == null) {
+      return ResponseEntity.status(Response.SC_NOT_FOUND).body(
+          new CommentResponse("Comment not found"));
+    }
     return ResponseEntity.ok(
         createCommentBuilder(user, "comment", id, commentRequest.getContent()));
   }
