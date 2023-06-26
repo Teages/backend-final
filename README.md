@@ -198,13 +198,15 @@ CREATE TABLE lives (
 
 ## 部署方案
 
-部署方案: 生产环境使用 CloudFlare Zero Trust 反向代理, 在源站不暴露的情况下, 提供 HTTPS 服务, 有效避免了各种自部署的安全问题
+部署方案: 生产环境使用 CloudFlare Zero Trust 反向代理, 在源站不暴露的情况下, 提供 HTTPS 服务
 
 部署步骤
 
 1. 代码推送
 2. workflow 打包 jar, 上传生产环境
 3. 生产环境重启
+
+## License
 
 以 [GLWT(Good Luck With That) Public License](https://github.com/me-shaon/GLWTPL) 分享, 作者不对任何使用情况负责
 
