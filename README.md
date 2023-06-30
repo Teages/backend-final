@@ -1,6 +1,6 @@
 # BUPT Web 后端开发技术(2023) - 课程大作业
 
-> !!! 请不要将这份代码作为作业提交 !!!
+> !!! 严禁将这份代码作为作业提交 !!!
 
 ## 题目
 直播电商应用系统后端设计与实现 
@@ -208,6 +208,6 @@ CREATE TABLE lives (
 
 ## License
 
-以 [GLWT(Good Luck With That) Public License](https://github.com/me-shaon/GLWTPL) 分享, 作者不对任何使用情况负责
+以 [GPL](https://www.gnu.org/licenses/gpl-3.0.html) 分享
 
-> !!! 请不要将这份代码作为作业提交 !!!
+> !!! 严禁将这份代码作为作业提交 !!!
